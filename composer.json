@@ -1,0 +1,27 @@
+{
+    "name": "hahadu/think-crawling",
+    "description": "crawling",
+    "type": "library",
+    "require": {
+        "php": ">=7.0",
+        "jaeger/querylist": ">=4.2",
+        "hahadu/helper-function": ">=0.8"
+    },
+    "require-dev": {
+
+
+    },
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "hahadu",
+            "email": "582167246@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Hahadu\\ThinkCrawling\\": "src/"
+        }
+    },
+        "minimum-stability": "dev"
+}
