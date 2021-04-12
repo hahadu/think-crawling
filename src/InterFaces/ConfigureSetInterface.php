@@ -25,7 +25,7 @@ interface ConfigureSetInterface
     public function set_file_data_cache(string $fileDataCache);
 
     /****
-     * 设置远程文件下载本地名称
+     * 设置远程文件下载本地名称键名
      * @param string $downloadUriFileName
      */
     public function set_download_uri_file_name(string $downloadUriFileName);

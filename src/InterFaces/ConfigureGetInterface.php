@@ -28,7 +28,7 @@ interface ConfigureGetInterface
     public function get_file_data_cache($url = ''): string;
 
     /****
-     * 获取远程文件下载本地名称
+     * 获取远程文件下载本地名称缓存键名
      * @param string $uri
      * @return string
      */

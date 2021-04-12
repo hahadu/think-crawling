@@ -19,7 +19,7 @@ trait ConfigureTrait
      * @param string $url
      * @return string
      */
-    public function get_page_cache($url = ''): string
+    protected function get_page_cache($url = ''): string
     {
         return $this->configure->get_page_cache($url);
     }
@@ -28,9 +28,9 @@ trait ConfigureTrait
      * 获取失败页面连接缓存键名
      * @return string
      */
-    public function get_fail_page_url(): string
+    protected function get_fail_page_url(): string
     {
-        return $this->get_fail_page_url();
+        return $this->configure->get_fail_page_url();
     }
 
     /*****
@@ -38,9 +38,9 @@ trait ConfigureTrait
      * @param string $url
      * @return string
      */
-    public function get_file_data_cache($url = ''): string
+    protected function get_file_data_cache($url = ''): string
     {
-        return $this->get_file_data_cache($url);
+        return $this->configure->get_file_data_cache($url);
     }
 
     /****
@@ -48,8 +48,8 @@ trait ConfigureTrait
      * @param string $uri
      * @return string
      */
-    public function get_download_uri_file_name($uri = ''): string
+    protected function get_download_uri_file_name($uri = ''): string
     {
-        return $this->get_download_uri_file_name($uri);
+        return $this->configure->get_download_uri_file_name($uri);
     }
 }
