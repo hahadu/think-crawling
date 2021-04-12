@@ -6,28 +6,33 @@ namespace Hahadu\ThinkCrawling\Base;
 
 use Hahadu\Helper\HttpHelper;
 use Hahadu\Helper\StringHelper;
+use Hahadu\ThinkCrawling\Traits\ConfigureTrait;
 use Hahadu\ThinkCrawling\Traits\FilesTrait;
 use Http\Client\Response;
 use QL\QueryList;
 use think\cache\driver\Redis;
 
+use Hahadu\ThinkCrawling\Configure\Configure;
+
+
 class Base
 {
     use FilesTrait;
-    protected const DOT = '.';
+    use ConfigureTrait;
+
     protected $QueryList;
     /***
      * @var \Redis
      */
     protected $redis;
-    protected const PAGE_CACHE = 'CRAWLING_PAGE_CACHE';
-    protected const FAIL_PAGE_URL = 'CRAWLING_FAIL_PAGE_URL';
-    protected const FILE_DATA_CACHE = 'CRAWLING_URL_FILE_DATA';
-    protected const DOWNLOAD_URI_FILE_NAME = 'DOWNLOAD_URI_FILE_NAME';
 
-
-    public function __construct()
+    /****
+     * Base constructor.
+     * @param Configure $configure
+     */
+    public function __construct(Configure $configure)
     {
+        $this->configure = $configure;
         $this->QueryList = new QueryList();
         $this->redis = new Redis();
     }
@@ -38,7 +43,7 @@ class Base
      * @return Response|NULL
      */
     protected function getHtml($url,$page_cache_timeout = 36000){
-        $html = $this->redis->get(self::PAGE_CACHE.$url);
+        $html = $this->redis->get($this->get_page_cache($url));
         if(!$html){
             $request = HttpHelper::request('get',$url);
             $responseCode = (int)$request->getResponseCode();
@@ -46,10 +51,10 @@ class Base
                 $html = $request->getBody();
                 $transType = $this->getTransType($html);
                 $html = StringHelper::$transType($html);
-                $this->redis->set(self::PAGE_CACHE.$url,$html,$page_cache_timeout);
-                $this->redis->zRem(self::FAIL_PAGE_URL,$url);
+                $this->redis->set($this->get_page_cache($url),$html,$page_cache_timeout);
+                $this->redis->zRem($this->get_fail_page_url(),$url);
             }else{
-                $this->redis->zAdd(self::FAIL_PAGE_URL,$responseCode,$url);
+                $this->redis->zAdd($this->get_fail_page_url(),$responseCode,$url);
             }
             usleep(10000);
         }else{
@@ -75,11 +80,11 @@ class Base
      * @return false|mixed|string
      */
     private function urlFileData($url){
-        $fileData = $this->redis->get(self::FILE_DATA_CACHE.$url);
+        $fileData = $this->redis->get($this->configure->get_file_data_cache($url));
         if(null==$fileData){
 
             $fileData = file_get_contents($url);
-            $this->redis->set(self::FILE_DATA_CACHE.$url,$fileData);
+            $this->redis->set($this->get_file_data_cache($url),$fileData);
         }
         return $fileData;
     }
@@ -95,6 +100,7 @@ class Base
         }
 
         switch ($charset){
+
             case 'gbk':
             case 'gb2312':
                 $transType = 'trans_gbk';

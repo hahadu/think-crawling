@@ -6,17 +6,18 @@ namespace Hahadu\ThinkCrawling\Traits;
 
 use Hahadu\Helper\FilesHelper;
 use Hahadu\Helper\StringHelper;
+use Hahadu\ThinkCrawling\Constants\Constants;
 use think\facade\Filesystem;
 
 trait FilesTrait
 {
 
     private function getUrlFileName($url){
-        $file_name = $this->redis->get(self::DOWNLOAD_URI_FILE_NAME.$url);
+        $file_name = $this->redis->get($this->get_download_uri_file_name($url));
         if(null==$file_name){
             $file_ext = FilesHelper::get_file_ext($url);
-            $file_name = md5(time().pathinfo($url,PATHINFO_BASENAME).StringHelper::create_rand_string(6)).self::DOT.$file_ext;
-            $this->redis->set(self::DOWNLOAD_URI_FILE_NAME.$url,$file_name);
+            $file_name = md5(time().pathinfo($url,PATHINFO_BASENAME).StringHelper::create_rand_string(6)).Constants::DOT.$file_ext;
+            $this->redis->set($this->get_download_uri_file_name($url),$file_name);
         }
         return $file_name;
     }
