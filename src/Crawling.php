@@ -4,7 +4,7 @@
 namespace Hahadu\ThinkCrawling;
 
 
-use Hahadu\ThinkCrawling\Base\Base;
+use Hahadu\ThinkCrawling\Core\Base;
 
 class Crawling extends Base
 {
