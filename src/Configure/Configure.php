@@ -4,8 +4,8 @@
 namespace Hahadu\ThinkCrawling\Configure;
 
 use Hahadu\ThinkCrawling\Constants\Constants;
-use Hahadu\ThinkCrawling\InterFaces\ConfigureGetInterface;
-use Hahadu\ThinkCrawling\InterFaces\ConfigureSetInterface;
+use Hahadu\ThinkCrawling\Interfaces\ConfigureGetInterface;
+use Hahadu\ThinkCrawling\Interfaces\ConfigureSetInterface;
 
 class Configure implements ConfigureGetInterface,ConfigureSetInterface
 {

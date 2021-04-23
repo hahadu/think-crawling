@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Hahadu\ThinkCrawling\InterFaces;
+namespace Hahadu\ThinkCrawling\Interfaces;
 
 
 interface ConfigureGetInterface

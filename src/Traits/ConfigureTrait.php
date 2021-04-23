@@ -4,7 +4,7 @@
 namespace Hahadu\ThinkCrawling\Traits;
 
 
-use Hahadu\ThinkCrawling\InterFaces\ConfigureGetInterface;
+use Hahadu\ThinkCrawling\Interfaces\ConfigureGetInterface;
 
 trait ConfigureTrait
 {
