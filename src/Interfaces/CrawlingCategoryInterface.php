@@ -7,9 +7,9 @@ use Hahadu\Collect\Collection;
 interface CrawlingCategoryInterface
 {
     /*****
-     * @param string $href
+     * @param string|null $href
      * @return Collection
      */
-    public function CategoryQueryList(string $href):Collection;
+    public function CategoryQueryList(string $href = null):Collection;
 
 }
