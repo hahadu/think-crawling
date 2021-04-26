@@ -76,6 +76,15 @@ class Base
 
     }
 
+    /*****
+     * html to QueryList object
+     * @param string $html
+     * @return QueryList
+     */
+    protected function buildHtml($html){
+        return $this->QueryList->html($html);
+    }
+
     /****
      * 缓存远程文件数据
      * @param $url
