@@ -11,6 +11,7 @@ use Hahadu\ThinkCrawling\Traits\FilesTrait;
 use Http\Client\Response;
 use QL\QueryList;
 use think\cache\driver\Redis;
+use GuzzleHttp\Client as Guzzle;
 
 use Hahadu\ThinkCrawling\Configure\Configure;
 
@@ -26,6 +27,8 @@ class Base
      */
     protected $redis;
 
+    protected $guzzle;
+
     /****
      * Base constructor.
      * @param Configure $configure
@@ -35,6 +38,7 @@ class Base
         $this->configure = $configure;
         $this->QueryList = $queryList;
         $this->redis = $redis;
+        $this->guzzle = new Guzzle();
     }
 
     /****
@@ -46,8 +50,8 @@ class Base
     {
         $html = $this->redis->get($this->get_page_cache($url));
         if (!$html) {
-            $request = HttpHelper::request('get', $url);
-            $responseCode = (int)$request->getResponseCode();
+            $request = $this->guzzle->request('get', $url);
+            $responseCode = (int)$request->getStatusCode();
             if ($responseCode == 200) {
                 $html = $request->getBody();
                 $transType = $this->getTransType($html);
