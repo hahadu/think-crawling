@@ -51,7 +51,9 @@ class Base
     {
         $html = $this->redis->get($this->get_page_cache($url));
         if (!$html) {
-            $request = $this->guzzle->get($url);
+            $request = $this->guzzle->get($url,[
+                'allow_redirects' => false
+            ]);
             $responseCode = (int)$request->getStatusCode();
             if ($responseCode == 200) {
                 $html = $request->getBody()->getContents();
