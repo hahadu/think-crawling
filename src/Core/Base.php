@@ -10,7 +10,7 @@ use think\cache\driver\Redis;
 use GuzzleHttp\Client as Guzzle;
 use Hahadu\ThinkCrawling\Configure\Configure;
 
-class Base
+abstract class Base
 {
     use FilesTrait;
     use ConfigureTrait;
