@@ -42,18 +42,19 @@ class Base
     }
 
     /****
-     * @param $url
+     * @param string $url
      * @param int $page_cache_timeout
-     * @return Response|NULL
+     * @return bool|mixed|string
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     protected function getHtml($url, $page_cache_timeout = 36000)
     {
         $html = $this->redis->get($this->get_page_cache($url));
         if (!$html) {
-            $request = $this->guzzle->request('get', $url);
+            $request = $this->guzzle->get($url);
             $responseCode = (int)$request->getStatusCode();
             if ($responseCode == 200) {
-                $html = $request->getBody();
+                $html = $request->getBody()->getContents();
                 $transType = $this->getTransType($html);
                 $html = StringHelper::$transType($html);
                 $this->redis->set($this->get_page_cache($url), $html, $page_cache_timeout);
