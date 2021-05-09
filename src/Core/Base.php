@@ -2,19 +2,13 @@
 
 
 namespace Hahadu\ThinkCrawling\Core;
-
-
-use Hahadu\Helper\HttpHelper;
 use Hahadu\Helper\StringHelper;
 use Hahadu\ThinkCrawling\Traits\ConfigureTrait;
 use Hahadu\ThinkCrawling\Traits\FilesTrait;
-use Http\Client\Response;
 use QL\QueryList;
 use think\cache\driver\Redis;
 use GuzzleHttp\Client as Guzzle;
-
 use Hahadu\ThinkCrawling\Configure\Configure;
-
 
 class Base
 {
