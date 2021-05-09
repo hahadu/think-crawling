@@ -105,7 +105,7 @@ abstract class Base
     protected function getTransType($html)
     {
         $charset = 'utf-8';
-        $_charset = $this->QueryList->html($html)->find('meta')->attrs('*')->filter(function ($item) {
+        $_charset = $this->buildHtml($html)->find('meta')->attrs('*')->filter(function ($item) {
             if (isset($item['charset'])) return $item;
         });
         foreach ($_charset as $item) {
