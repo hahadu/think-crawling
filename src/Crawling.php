@@ -4,6 +4,7 @@
 namespace Hahadu\ThinkCrawling;
 
 
+use Hahadu\Helper\JsonHelper;
 use Hahadu\ThinkCrawling\Core\Base;
 use think\swoole\Websocket;
 
@@ -36,5 +37,28 @@ class Crawling extends Base
     public function isSocket(){
         return (strtolower(php_sapi_name())=='cli' && ($this->websocket instanceof Websocket));
     }
+    /*****
+     * 推送数据
+     * @param $message
+     * @param string $value
+     * @param int $code
+     * @return bool
+     */
+    protected function wsPush($message, $value = '', $code = 1)
+    {
+
+        if($this->isSocket()){
+            $type = ($code == 1) ? 'success' : 'error';
+            $_data = wrap_msg_array($code, $message, [
+                'fd' => $this->websocket->getSender(),
+                'type' => $type,
+                "value" => $value
+            ]);
+            $value = JsonHelper::json_encode($_data);
+            usleep(150000);
+            return $this->websocket->push($value);
+        }
+    }
+
 
 }
