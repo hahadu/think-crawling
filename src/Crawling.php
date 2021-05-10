@@ -34,9 +34,19 @@ class Crawling extends Base
     /******
      * @return bool
      */
-    public function isSocket(){
+    public function isSocket(): bool
+    {
         return (strtolower(php_sapi_name())=='cli' && ($this->websocket instanceof Websocket));
     }
+
+    /****
+     * @return bool
+     */
+    public function isCLI(): bool
+    {
+        return isCLI();
+    }
+
     /*****
      * 推送数据
      * @param $message
