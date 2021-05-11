@@ -23,6 +23,16 @@ abstract class Base
 
     protected $guzzle;
 
+    protected $host = '';
+
+    /****
+     * @param string $host
+     */
+    public function setHost($host=''){
+        $this->host = $host;
+    }
+
+
     /****
      * Base constructor.
      * @param Configure $configure
@@ -127,5 +137,30 @@ abstract class Base
         }
         return $transType;
     }
+    /******
+     * 随机时间createTime
+     * @param $create_time
+     * @return int
+     */
+    protected function setTime()
+    {
+
+        $create_time = date('Y') . '-' . rand(1, 12) . '-' . rand(1, 30);
+        $time = rand(1, 24) . ':' . rand(0, 59) . ':' . rand(0, 59);
+        $time = $create_time . ' ' . $time;
+        $time = strtotime($time);
+        $year = (date('m', $time) < date('m')) ? date('Y') : date('Y') - 1;
+        return strtotime($year . date('-m-d H:i:s', $time));
+
+    }
+
+    /****
+     * @return bool
+     */
+    protected function isCLI(): bool
+    {
+        return isCLI();
+    }
+
 
 }

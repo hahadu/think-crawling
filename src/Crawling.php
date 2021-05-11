@@ -8,21 +8,12 @@ use Hahadu\Helper\JsonHelper;
 use Hahadu\ThinkCrawling\Core\Base;
 use think\swoole\Websocket;
 
-class Crawling extends Base
+abstract class Crawling extends Base
 {
     /*****
      * @var Websocket
      */
     protected $websocket = false;
-
-    protected $host = '';
-
-    /****
-     * @param string $host
-     */
-    public function setHost($host=''){
-        $this->host = $host;
-    }
 
     /****
      * @param Websocket $websocket
@@ -36,15 +27,7 @@ class Crawling extends Base
      */
     public function isSocket(): bool
     {
-        return $this->isCLI() && ($this->websocket instanceof Websocket);
-    }
-
-    /****
-     * @return bool
-     */
-    protected function isCLI(): bool
-    {
-        return isCLI();
+        return ($this->isCLI() && ($this->websocket instanceof Websocket));
     }
 
     /*****
