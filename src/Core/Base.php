@@ -106,12 +106,12 @@ abstract class Base
         $fileData = $this->redis->get($this->configure->get_file_data_cache($url));
         if (null == $fileData) {
 
-            if(file_get_contents($url)){
+            try{
                 $fileData = file_get_contents($url);
-            }else{
-                $fileData = 'noImage';
+                $this->redis->set($this->get_file_data_cache($url), $fileData);
+            }catch (\Exception $e){
+                $fileData = null;
             }
-            $this->redis->set($this->get_file_data_cache($url), $fileData);
         }
         return $fileData;
     }
