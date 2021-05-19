@@ -37,7 +37,7 @@ abstract class Crawling extends Base
      * @param int $code
      * @return bool
      */
-    protected function wsPush($message, $value = '', $code = 1)
+    protected function wsPush($message, $value = '', $code = 1,$usleep=150000)
     {
 
         if($this->isSocket()){
@@ -48,7 +48,7 @@ abstract class Crawling extends Base
                 "value" => $value
             ]);
             $value = JsonHelper::json_encode($_data);
-            usleep(150000);
+            usleep($usleep);
             return $this->websocket->push($value);
         }
     }
