@@ -30,6 +30,10 @@ abstract class Crawling extends Base
         return ($this->isCLI() && ($this->websocket instanceof Websocket));
     }
 
+    public function isQueue(){
+        return ($this->isCLI());
+    }
+
     /*****
      * 推送数据
      * @param $message
