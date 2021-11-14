@@ -12,8 +12,7 @@ use Hahadu\ThinkCrawling\Configure\Configure;
 
 abstract class Base
 {
-    use FilesTrait;
-    use ConfigureTrait;
+    use FilesTrait,ConfigureTrait;
 
     protected $QueryList;
     /***
@@ -33,7 +32,7 @@ abstract class Base
     }
 
 
-    /****
+    /**
      * Base constructor.
      * @param Configure $configure
      */
@@ -45,7 +44,11 @@ abstract class Base
         $this->guzzle = new Guzzle();
     }
 
-    /****
+    /**
+     * 获取文本内容
+     * 优先获取缓存内容，
+     * 如果缓存过期或者不存在，
+     * 则重新拉取远程页面进行缓存
      * @param string $url
      * @param int $page_cache_timeout
      * @return bool|mixed|string
@@ -76,7 +79,8 @@ abstract class Base
         return $html;
     }
 
-    /****
+    /**
+     * 根据设置查询条件，获取文档信息
      * @param QueryList $html
      * @param array $rules
      * @return mixed
@@ -87,16 +91,18 @@ abstract class Base
 
     }
 
-    /*****
+    /**
+     * 打包文档信息为QL对象
      * html to QueryList object
      * @param string $html
      * @return QueryList
      */
-    protected function buildHtml($html){
+    protected function buildHtml($html):QueryList
+    {
         return $this->QueryList->html($html);
     }
 
-    /****
+    /**
      * 缓存远程文件数据
      * @param $url
      * @return false|mixed|string
@@ -116,7 +122,12 @@ abstract class Base
         return $fileData;
     }
 
-    protected function getTransType($html)
+    /**
+     * 获取编码
+     * @param $html
+     * @return string
+     */
+    protected function getTransType($html):string
     {
         $charset = 'utf-8';
         $_charset = $this->buildHtml($html)->find('meta')->attrs('*')->filter(function ($item) {
@@ -141,12 +152,12 @@ abstract class Base
         }
         return $transType;
     }
-    /******
+    /**
      * 随机时间createTime
      * @param $create_time
      * @return int
      */
-    protected function setTime()
+    protected function setTime():int
     {
 
         $create_time = date('Y') . '-' . rand(1, 12) . '-' . rand(1, 30);
@@ -158,7 +169,7 @@ abstract class Base
 
     }
 
-    /****
+    /**
      * @return bool
      */
     protected function isCLI(): bool
